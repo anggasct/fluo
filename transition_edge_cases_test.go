@@ -722,14 +722,8 @@ func TestContext_NilValuesAndTypeAssertions(t *testing.T) {
 		ctx.Set("int_value", 42)
 
 		// Try to get and type assert
-		if _, ok := ctx.Get("nil_value"); ok {
-			// Check if nil value exists
-		}
-
-		// Test type assertions with wrong types
-		if _, ok := ctx.Get("string_value"); ok {
-			// Type assertion would fail at runtime, but we're testing the Get method
-		}
+		ctx.Get("nil_value")
+		ctx.Get("string_value")
 
 		return nil
 	}
@@ -1765,7 +1759,7 @@ func TestPseudostate_JoinCombinations(t *testing.T) {
 
 	for _, tc := range testCases {
 		// Reset to branch state
-		machine.SetState("branch")
+		_ = machine.SetState("branch")
 
 		// Go to specific path
 		result := machine.HandleEvent(tc.event, nil)
@@ -2040,7 +2034,7 @@ func TestErrorHandling_GuardPanics(t *testing.T) {
 	AssertState(t, machine, "safe")
 
 	// Reset to initial
-	machine.SetState("initial")
+	_ = machine.SetState("initial")
 
 	// Panicking guard should be handled gracefully
 	result2 := machine.HandleEvent("panic_event", nil)
@@ -2319,7 +2313,7 @@ func TestErrorHandling_MultipleSimultaneousErrors(t *testing.T) {
 
 	for _, tc := range testCases {
 		// Reset to initial for each test
-		machine.SetState("initial")
+		_ = machine.SetState("initial")
 
 		result := machine.HandleEvent(tc.event, nil)
 		if tc.expectError {
@@ -2478,7 +2472,7 @@ func TestPerformance_GoroutineLeaks(t *testing.T) {
 				machine.HandleEvent("finish", nil)
 
 				// Reset and continue
-				machine.Reset()
+				_ = machine.Reset()
 				_ = machine.Start()
 
 				// Small delay to increase goroutine lifetime
@@ -2623,7 +2617,7 @@ func TestDataStructure_InvalidStateIDs(t *testing.T) {
 	builder1.State("").Initial()    // Empty state name
 	definition1 := builder1.Build() // This should panic
 	machine1 := definition1.CreateInstance()
-	machine1.Start()
+	_ = machine1.Start()
 
 	// Test with very long state name
 	veryLongName := strings.Repeat("a", 1000)

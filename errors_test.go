@@ -386,6 +386,7 @@ func TestErrorCreation_Functions(t *testing.T) {
 		err := NewStateNotFoundError("test_state")
 		if err == nil {
 			t.Error("Expected non-nil error")
+			return
 		}
 
 		if err.Code != ErrCodeStateNotFound {
@@ -411,6 +412,7 @@ func TestErrorCreation_Functions(t *testing.T) {
 		err := NewInvalidStateError("invalid_state", "test message")
 		if err == nil {
 			t.Error("Expected non-nil error")
+			return
 		}
 
 		if err.Code != ErrCodeInvalidState {
@@ -430,6 +432,7 @@ func TestErrorCreation_Functions(t *testing.T) {
 		err := NewTransitionError(ErrCodeTransitionNotAllowed, "state_a", "state_b", "test_event", "test message")
 		if err == nil {
 			t.Error("Expected non-nil error")
+			return
 		}
 
 		if err.Code != ErrCodeTransitionNotAllowed {
@@ -446,6 +449,7 @@ func TestErrorCreation_Functions(t *testing.T) {
 		err := NewNoTransitionError("test_state", "test_event")
 		if err == nil {
 			t.Error("Expected non-nil error")
+			return
 		}
 
 		if err.Code != ErrCodeTransitionNotAllowed {
@@ -462,6 +466,7 @@ func TestErrorCreation_Functions(t *testing.T) {
 		err := NewMachineError(ErrCodeMachineNotStarted, "test_operation", "test message")
 		if err == nil {
 			t.Error("Expected non-nil error")
+			return
 		}
 
 		if err.Code != ErrCodeMachineNotStarted {
@@ -486,6 +491,7 @@ func TestErrorCreation_Functions(t *testing.T) {
 		err := NewMachineNotStartedError("test_operation")
 		if err == nil {
 			t.Error("Expected non-nil error")
+			return
 		}
 
 		if err.Code != ErrCodeMachineNotStarted {

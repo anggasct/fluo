@@ -3,6 +3,7 @@ package fluo
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"slices"
 	"strings"
@@ -275,7 +276,7 @@ func (sm *StateMachine) HandleEventWithContext(ctx context.Context, eventName st
 		sm.observers.NotifyEventRejected(event, reason, sm.context)
 		return NewEventResult(false, false, sm.currentState, sm.currentState).
 			WithRejection(reason).
-			WithError(fmt.Errorf(reason))
+			WithError(errors.New(reason))
 	}
 
 	if smCtx, ok := sm.context.(*StateMachineContext); ok {

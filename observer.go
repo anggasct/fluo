@@ -127,7 +127,7 @@ func (om *ObserverManager) NotifyTransition(from string, to string, event Event,
 					if extObs, ok := observer.(ExtendedObserver); ok {
 						// Try to notify about the observer error, but catch any panic from that too
 						func() {
-							defer func() { recover() }()
+							defer func() { _ = recover() }()
 							extObs.OnError(fmt.Errorf("observer panic in OnTransition: %v", r), ctx)
 						}()
 					}
@@ -149,7 +149,7 @@ func (om *ObserverManager) NotifyStateEnter(state string, ctx Context) {
 				if r := recover(); r != nil {
 					if extObs, ok := observer.(ExtendedObserver); ok {
 						func() {
-							defer func() { recover() }()
+							defer func() { _ = recover() }()
 							extObs.OnError(fmt.Errorf("observer panic in OnStateEnter: %v", r), ctx)
 						}()
 					}
@@ -171,7 +171,7 @@ func (om *ObserverManager) NotifyStateExit(state string, ctx Context) {
 				defer func() {
 					if r := recover(); r != nil {
 						func() {
-							defer func() { recover() }()
+							defer func() { _ = recover() }()
 							extObs.OnError(fmt.Errorf("observer panic in OnStateExit: %v", r), ctx)
 						}()
 					}

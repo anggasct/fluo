@@ -22,7 +22,7 @@ func TestMultipleTransitionsChaining(t *testing.T) {
 	_ = machine.Start()
 
 	// Force transition to maintenance_mode to test the transitions
-	machine.SetState("maintenance_mode")
+	_ = machine.SetState("maintenance_mode")
 
 	// Test first transition
 	result := machine.HandleEvent("maintenance_complete", nil)
@@ -36,7 +36,7 @@ func TestMultipleTransitionsChaining(t *testing.T) {
 	// Reset and test second transition
 	machine2 := definition.CreateInstance()
 	_ = machine2.Start()
-	machine2.SetState("maintenance_mode")
+	_ = machine2.SetState("maintenance_mode")
 
 	result2 := machine2.HandleEvent("power_off", nil)
 	if !result2.Processed {

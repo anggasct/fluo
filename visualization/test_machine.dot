@@ -1,0 +1,11 @@
+digraph StateMachine {
+  rankdir=TB;
+  node [shape=box];
+  edge [fontsize=10];
+
+  // States
+  "idle" [shape=box style="filled" fillcolor=lightgreen label="idle\n(initial)"];
+  "running" [shape=box style="filled" fillcolor=lightblue label="running"];
+  // Transitions
+  "idle" -> "running";
+}
